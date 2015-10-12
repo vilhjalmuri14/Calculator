@@ -1,0 +1,2 @@
+# Calculator
+Verkefni í hugbúnaðarfræði.
