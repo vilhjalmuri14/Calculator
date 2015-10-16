@@ -18,6 +18,9 @@ public class Calculator {
 	}
 
 	private static String[] splitNumbers(String numbers){
+
+		// change newline to ,
+	    numbers = numbers.replaceAll("\n",",");
 	    return numbers.split(",");
 	}
       
@@ -28,7 +31,4 @@ public class Calculator {
 		}
 		return total;
     }
-
-
-
 }

@@ -9,6 +9,7 @@ public class CalculatorTest {
       org.junit.runner.JUnitCore.main("is.ru.calculator.CalculatorTest");
     }
 
+    // Tests for add function
 	@Test
 	public void testEmptyString() {
 		assertEquals(0, Calculator.add(""));
@@ -29,4 +30,8 @@ public class CalculatorTest {
     	assertEquals(6, Calculator.add("1,2,3"));
     }
 
+    @Test
+    public void testNewLine(){
+    	assertEquals(6, Calculator.add("1\n2,3"));
+    }
 }
