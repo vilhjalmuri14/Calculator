@@ -1,6 +1,7 @@
 package is.ru.stringcalculator;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Calculator {
 
@@ -53,13 +54,33 @@ public class Calculator {
     }
 
     private static int delimiter(String text) throws Exception{
+
     	// find the delimiter
     	String delimiter = text.substring(2,3);
 
-		// cut off the //
-		text = text.substring(4);
+    	if(delimiter.equals("[")) {
+    		return longDilimeter(text);
+    	}
+    	else {
+    		// cut off the //
+			text = text.substring(4);
+    	}
 
-		text = text.replaceAll(delimiter, ",");
+		return sum(text.split(delimiter));
+    }
+
+    private static int longDilimeter(String text) throws Exception{
+    	int index =  text.indexOf("\n", 2); 
+
+    	// find the delimiter
+    	String delimiter = text.substring(3,index - 1);
+
+    	// get all the string after \n
+		text = text.substring(index + 1);
+
+		// replays the delimiter whith ,
+		text = text.replaceAll(Pattern.quote(delimiter),",");
+
 		return sum(splitNumbers(text));
     }
 
