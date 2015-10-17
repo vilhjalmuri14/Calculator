@@ -6,6 +6,9 @@ public class Calculator {
 		if(text.equals("")){
 			return 0;
 		}
+		else if(text.startsWith("//")){
+			return delimiter(text);
+		}
 		else if(text.contains(",")){
 			return sum(splitNumbers(text));
 		}
@@ -20,7 +23,8 @@ public class Calculator {
 	private static String[] splitNumbers(String numbers){
 
 		// change newline to ,
-	    numbers = numbers.replaceAll("\n",",");
+	    numbers = numbers.replaceAll("\n", ",");
+
 	    return numbers.split(",");
 	}
       
@@ -30,5 +34,16 @@ public class Calculator {
 		    total += toInt(number);
 		}
 		return total;
+    }
+
+    private static int delimiter(String text){
+    	// find the delimiter
+    	String delimiter = text.substring(2,3);
+
+		// cut off the //
+		text = text.substring(4);
+
+		text = text.replaceAll(delimiter, ",");
+		return sum(splitNumbers(text));
     }
 }
