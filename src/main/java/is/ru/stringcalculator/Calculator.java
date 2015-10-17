@@ -59,7 +59,7 @@ public class Calculator {
     	String delimiter = text.substring(2,3);
 
     	if(delimiter.equals("[")) {
-    		return longDilimeter(text);
+    		return longDelimiter(text);
     	}
     	else {
     		// cut off the //
@@ -69,19 +69,45 @@ public class Calculator {
 		return sum(text.split(delimiter));
     }
 
-    private static int longDilimeter(String text) throws Exception{
-    	int index =  text.indexOf("\n", 2); 
-
-    	// find the delimiter
-    	String delimiter = text.substring(3,index - 1);
-
+    private static int longDelimiter(String text) throws Exception{
+    	ArrayList<String> delimiters  = findAllDelimiters(text);
+    	
+    	int newline = text.indexOf("\n");
     	// get all the string after \n
-		text = text.substring(index + 1);
-
-		// replays the delimiter whith ,
-		text = text.replaceAll(Pattern.quote(delimiter),",");
+		text = text.substring(newline + 1);
+		
+		for(String del : delimiters){
+			// replays the delimiter whith ,
+			text = text.replaceAll(Pattern.quote(del),",");
+		}
 
 		return sum(splitNumbers(text));
+    }
+
+    private static ArrayList<String> findAllDelimiters(String text) throws Exception{
+    	ArrayList<String> delimiters  = new ArrayList<String>();
+
+    	int indexStart =  text.indexOf("[", 2); 
+    	String i = "[";
+    	
+    	while(i.equals("[")){
+        	int indexEnd =  text.indexOf("]", indexStart); 
+        	
+        	// find the delimiter and add it to the ArrayList
+        	delimiters.add(text.substring(indexStart + 1,indexEnd));
+        	
+        	indexStart = text.indexOf("[", indexEnd);
+        	
+        	// if we found ]
+        	if(indexStart != -1){
+        		i = text.substring(indexStart,indexStart + 1);
+        	}
+        	else {
+        		i = "[ was not found";
+        	}
+    	}
+
+    	return delimiters;
     }
 
     private static void checkNegative(ArrayList<Integer> negative) throws Exception{
