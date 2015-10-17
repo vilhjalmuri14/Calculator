@@ -38,6 +38,7 @@ public class Calculator {
         for(String n : numbers){
         	int number = toInt(n);
 
+        	number = checkBigNumbers(number);
 		    total += number;
 
 		    // if the number is negative
@@ -75,5 +76,12 @@ public class Calculator {
     	message = message.substring(0,message.length()-1);
 
 		throw new Exception(message);
+    }
+
+    private static int checkBigNumbers(int number) {
+    	if(number > 1000) {
+    		return 0;
+    	}
+    	return number;
     }
 }

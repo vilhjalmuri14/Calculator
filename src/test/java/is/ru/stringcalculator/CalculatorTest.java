@@ -66,4 +66,9 @@ public class CalculatorTest {
   		assertEquals("Negatives are not allowed: -4,-5", result);
     }
 
+    @Test
+    public void testBigNumber() throws Exception{
+    	assertEquals(2,Calculator.add("1001,2"));
+    }
+
 }
