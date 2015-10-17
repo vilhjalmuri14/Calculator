@@ -80,4 +80,9 @@ public class CalculatorTest {
     public void testMultipleDelimiters() throws Exception{
     	assertEquals(6,Calculator.add("//[*][%]\n1*2%3"));
     }
+
+    @Test
+    public void testMultipleDelimiterOfAnyLenght() throws Exception{
+    	assertEquals(15,Calculator.add("//[++][%][;]\n1++2%3;4;5"));
+    }
 }
