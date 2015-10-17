@@ -1,8 +1,11 @@
 package is.ru.stringcalculator;
 
+import java.util.ArrayList;
+
 public class Calculator {
 
-	public static int add(String text){
+	public static int add(String text) throws Exception {
+		
 		if(text.equals("")){
 			return 0;
 		}
@@ -13,14 +16,14 @@ public class Calculator {
 			return sum(splitNumbers(text));
 		}
 		else
-			return 1;
+			return toInt(text);
 	}
 
-	private static int toInt(String number){
+	private static int toInt(String number) throws Exception {
 		return Integer.parseInt(number);
 	}
 
-	private static String[] splitNumbers(String numbers){
+	private static String[] splitNumbers(String numbers) throws Exception {
 
 		// change newline to ,
 	    numbers = numbers.replaceAll("\n", ",");
@@ -28,15 +31,27 @@ public class Calculator {
 	    return numbers.split(",");
 	}
       
-    private static int sum(String[] numbers){
+    private static int sum(String[] numbers) throws Exception{
  	    int total = 0;
-        for(String number : numbers){
-		    total += toInt(number);
+		ArrayList<Integer> negative = new ArrayList<Integer>();
+
+        for(String n : numbers){
+        	int number = toInt(n);
+
+		    total += number;
+
+		    // if the number is negative
+		    if(number < 0) {
+		    	negative.add(number);
+		    }
 		}
+
+		checkNegative(negative);
+
 		return total;
     }
 
-    private static int delimiter(String text){
+    private static int delimiter(String text) throws Exception{
     	// find the delimiter
     	String delimiter = text.substring(2,3);
 
@@ -45,5 +60,20 @@ public class Calculator {
 
 		text = text.replaceAll(delimiter, ",");
 		return sum(splitNumbers(text));
+    }
+
+    private static void checkNegative(ArrayList<Integer> negative) throws Exception{
+    	if(negative.isEmpty()) return;
+
+    	String message = "Negatives are not allowed: ";
+
+    	for(Integer number : negative){
+    		message = message + number + ",";
+    	}
+
+    	// cut off the last ,
+    	message = message.substring(0,message.length()-1);
+
+		throw new Exception(message);
     }
 }

@@ -11,32 +11,59 @@ public class CalculatorTest {
 
     // Tests for add function
 	@Test
-	public void testEmptyString() {
+	public void testEmptyString() throws Exception {
 		assertEquals(0, Calculator.add(""));
 	}
 
 	@Test
-	public void testOneNumber() {
+	public void testOneNumber() throws Exception {
 		assertEquals(1, Calculator.add("1"));
 	}
 
 	@Test
-	public void testTwoNumbers() {
+	public void testTwoNumbers() throws Exception {
 		assertEquals(3, Calculator.add("1,2"));
 	}	
 
 	@Test
-    public void testMultipleNumbers(){
+    public void testMultipleNumbers() throws Exception {
     	assertEquals(6, Calculator.add("1,2,3"));
     }
 
     @Test
-    public void testNewLine(){
+    public void testNewLine() throws Exception {
     	assertEquals(6, Calculator.add("1\n2,3"));
     }
     
     @Test 
-    public void testDelimiter(){
+    public void testDelimiter() throws Exception {
     	assertEquals(3, Calculator.add("//;\n1;2"));
     }
+
+    @Test
+    public void testNegativeNumbers(){
+    	String result = "";
+
+		try {
+		  Calculator.add("-1,2");
+		} catch (Exception e) {
+		  result = e.getMessage();
+		}
+
+  		assertEquals("Negatives are not allowed: -1", result);
+    }
+
+    @Test
+    public void testTwoNegativeNumbers(){
+    	String result = "";
+
+		try {
+		  Calculator.add("2,-4,3,-5");
+		} catch (Exception e) {
+		  result = e.getMessage();
+		}
+
+  		assertEquals("Negatives are not allowed: -4,-5", result);
+    }
+
 }
